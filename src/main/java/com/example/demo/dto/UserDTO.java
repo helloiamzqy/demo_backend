@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 public class UserDTO {
 
     @NotBlank
-    private String userKey;
+    private String id;
     @NotBlank
     private String username;
     @NotBlank

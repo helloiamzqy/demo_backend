@@ -24,7 +24,6 @@ public class UserController {
     private UserService userService;
 
     @ApiOperation(value = "Get all users")
-    @ApiResponse(code = 404, message = "SysUser not exits.", response = ErrorResponse.class)
     @GetMapping("")
     public List<UserDTO> list() {
         return userService.list();
@@ -39,7 +38,7 @@ public class UserController {
 
     @ApiOperation(value = "Update user info", notes = "Success return user id.")
     @ApiImplicitParam(name = "dto", value = "SysUser Info", dataType = "UserDTO")
-    @PostMapping("")
+    @PutMapping("")
     public String updateUser(@RequestBody @Validated UserDTO dto) {
         return userService.update(dto);
     }

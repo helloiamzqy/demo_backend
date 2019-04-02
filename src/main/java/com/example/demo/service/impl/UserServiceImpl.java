@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
 import com.example.demo.dto.UserAuthDTO;
 import com.example.demo.dto.UserDTO;
@@ -7,6 +7,7 @@ import com.example.demo.entity.SysUser;
 import com.example.demo.exception.ConflictException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
 import com.example.zklock.core.ZkLock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,25 +64,25 @@ public class UserServiceImpl implements UserService {
     @ZkLock(value = "user", key = "username")
     public String register(UserDTO dto) {
         Optional<SysUser> existUser = userRepository.findByUsername(dto.getUsername());
-        if(existUser.isPresent()) {
+        if (existUser.isPresent()) {
             throw new ConflictException("Username is existed.");
         }
         SysUser user = new SysUser(dto.getUsername(), passwordEncoder.encode(dto.getPassword()));
         user.getPermissions().add(new Permission("USER"));
         userRepository.save(user);
-        return user.getUserKey();
+        return user.getId();
     }
 
     @Override
     public String update(UserDTO dto) {
-        Optional<SysUser> userOp = userRepository.findById(dto.getUserKey());
+        Optional<SysUser> userOp = userRepository.findById(dto.getId());
         if (!userOp.isPresent()) {
             throw new NotFoundException("SysUser not exist.");
         }
         SysUser user = userOp.get();
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         userRepository.save(user);
-        return user.getUserKey();
+        return user.getId();
     }
 
     @Override
@@ -100,7 +101,7 @@ public class UserServiceImpl implements UserService {
 
     private UserDTO toDTO(SysUser user) {
         UserDTO userDTO = new UserDTO();
-        userDTO.setUserKey(user.getUserKey());
+        userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
         return userDTO;
     }

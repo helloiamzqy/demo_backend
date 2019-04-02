@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 @Data
 public class UserAuthDTO {
 
-    private String userKey;
+    private String id;
     private String username;
     private Set<String> permissions = new HashSet<>();
 
     public UserAuthDTO(SysUser user) {
-        userKey = user.getUserKey();
+        id = user.getId();
         username = user.getUsername();
         permissions.addAll(user.getPermissions().stream().map(Permission::getAuthority).collect(Collectors.toSet()));
     }

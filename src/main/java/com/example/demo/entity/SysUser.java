@@ -20,7 +20,7 @@ public class SysUser extends AuditEntity implements UserDetails {
 
     @Id
     @Field("_id")
-    private String userKey;
+    private String id;
     @NonNull
     private String username;
     @NonNull
