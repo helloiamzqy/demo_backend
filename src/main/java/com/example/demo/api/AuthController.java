@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("system")
 @ApiIgnore
@@ -19,7 +21,8 @@ public class AuthController {
     private UserService userService;
 
     @PostMapping("/connect")
-    public String connect() {
+    public String connect(HttpSession session) {
+        session.setAttribute("INIT", "T");
         return "success";
     }
 
@@ -29,8 +32,10 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public String logout() {
-        return userService.logout();
+    public String logout(HttpSession session) {
+        String result = userService.logout();
+        session.invalidate();
+        return result;
     }
 
     @PostMapping("/register")

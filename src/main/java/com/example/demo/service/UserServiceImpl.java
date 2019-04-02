@@ -4,6 +4,7 @@ import com.example.demo.dto.UserAuthDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.Permission;
 import com.example.demo.entity.SysUser;
+import com.example.demo.exception.ConflictException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.repository.UserRepository;
 import com.example.zklock.core.ZkLock;
@@ -59,7 +60,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @ZkLock(value = "user", key = "username")
     public String register(UserDTO dto) {
+        Optional<SysUser> existUser = userRepository.findByUsername(dto.getUsername());
+        if(existUser.isPresent()) {
+            throw new ConflictException("Username is existed.");
+        }
         SysUser user = new SysUser(dto.getUsername(), passwordEncoder.encode(dto.getPassword()));
         user.getPermissions().add(new Permission("USER"));
         userRepository.save(user);
@@ -79,7 +85,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @ZkLock(value = "user")
     public List<UserDTO> list() {
         return userRepository.findAll().stream().map(this::toDTO).collect(Collectors.toList());
     }

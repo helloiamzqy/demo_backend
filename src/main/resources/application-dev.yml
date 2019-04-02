@@ -2,15 +2,6 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/demo
-  redis:
-    host: localhost
-    password:
-    port: 6379
-  session:
-    timeout: 3600
-    store-type: REDIS
-    redis:
-      flush-mode: ON_SAVE
-      namespace: spring:session
-
-#zk.url: 127.0.0.1:2181
+  autoconfigure:
+    exclude: "org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration,
+    org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration"
