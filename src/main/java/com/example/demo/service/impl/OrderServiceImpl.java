@@ -57,7 +57,9 @@ public class OrderServiceImpl implements OrderService {
         vo.setUserId(entity.getId());
         vo.setMerchandiseId(ofNullable(merchandise).map(Merchandise::getId).orElse(""));
         vo.setMerchandiseName(ofNullable(merchandise).map(Merchandise::getName).orElse(entity.getMerchandiseName()));
+        vo.setPrice(entity.getPrice());
         vo.setQuantity(entity.getQuantity());
+        vo.setCreateTime(entity.getCreateTime());
         return vo;
     }
 }

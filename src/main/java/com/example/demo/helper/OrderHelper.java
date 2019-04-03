@@ -46,6 +46,7 @@ public class OrderHelper {
         order.setMerchandise(merchandise);
         order.setMerchandiseName(merchandise.getName());
         order.setQuantity(quantity);
+        order.setPrice(merchandise.getPrice() * quantity);
         order.setUserId(userId);
         return order;
     }

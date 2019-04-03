@@ -23,5 +23,7 @@ public class Order extends AuditEntity {
 
     private String merchandiseName;
 
+    private Double price;
+
     private Integer quantity;
 }
