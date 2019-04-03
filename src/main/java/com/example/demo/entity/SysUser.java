@@ -1,7 +1,11 @@
 package com.example.demo.entity;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,7 +18,6 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Document
 public class SysUser extends AuditEntity implements UserDetails {
 
@@ -22,6 +25,7 @@ public class SysUser extends AuditEntity implements UserDetails {
     @Field("_id")
     private String id;
     @NonNull
+    @Indexed(unique = true)
     private String username;
     @NonNull
     private String password;
