@@ -13,4 +13,4 @@ spring:
       flush-mode: ON_SAVE
       namespace: spring:session
 
-zk.url: 127.0.0.1:2181
+zk.url: localhost:2181

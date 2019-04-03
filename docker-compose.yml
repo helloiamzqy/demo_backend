@@ -1,0 +1,11 @@
+version: '3'
+services:
+  demo:
+    image: demo/demo-0.0.0.1:latest
+    environment:
+      SPRING_PROFILES_ACTIVE: int
+      spring.data.mongodb.uri: mongodb://10.222.22.73:27017/demo
+      spring.redis.host: 10.222.22.73
+      zk.url: 10.222.22.73:2181
+    ports:
+      - 9999:9999
