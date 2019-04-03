@@ -5,6 +5,7 @@ import com.example.demo.entity.Merchandise;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.repository.MerchandiseRepository;
 import com.example.demo.service.MerchandiseService;
+import com.example.zklock.core.ZkLock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,7 @@ public class MerchandiseServiceImpl implements MerchandiseService {
     }
 
     @Override
+    @ZkLock(value = "merchandise", key = "id")
     public String updateMerchandise(MerchandiseDTO dto) {
         Optional<Merchandise> merchandiseOp = merchandiseRepository.findById(dto.getId());
         if (!merchandiseOp.isPresent()) {
