@@ -1,0 +1,16 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://10.222.22.73:27017/demo
+  redis:
+    host: 10.222.22.73
+    password:
+    port: 6379
+  session:
+    timeout: 3600
+    store-type: REDIS
+    redis:
+      flush-mode: ON_SAVE
+      namespace: spring:session
+
+zk.url: 10.222.22.73:2181
