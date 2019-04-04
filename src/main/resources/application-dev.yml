@@ -6,4 +6,4 @@ spring:
     exclude: "org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration,
     org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration"
 logging:
-  config: classpath:logback-dev.xml
+  config: classpath:logback-elk.xml
