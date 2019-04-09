@@ -18,6 +18,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -74,6 +75,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public String update(UserDTO dto) {
         Optional<SysUser> userOp = userRepository.findById(dto.getId());
         if (!userOp.isPresent()) {
@@ -100,9 +102,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserDTO toDTO(SysUser user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
-        userDTO.setUsername(user.getUsername());
-        return userDTO;
+        return UserDTO.builder().id(user.getId()).username(user.getUsername()).build();
     }
 }
