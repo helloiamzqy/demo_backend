@@ -5,3 +5,15 @@ spring:
   autoconfigure:
     exclude: "org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration,
     org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration"
+
+management:
+  server:
+    port: 9998
+  endpoints:
+    web:
+      base-path: /manage
+      exposure:
+        include: ["*"]
+  endpoint:
+    health:
+      show-details: always
