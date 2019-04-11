@@ -4,3 +4,15 @@ server:
 spring:
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:dev}
+
+management:
+  server:
+    port: 9998
+  endpoints:
+    web:
+      base-path: /manage
+      exposure:
+        include: ["*"]
+  endpoint:
+    health:
+      show-details: always

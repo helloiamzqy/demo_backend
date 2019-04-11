@@ -1,0 +1,21 @@
+version: '3'
+services:
+  demo:
+    image: demo/demo:0.0.0.1
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 300M
+      restart_policy:
+        condition: on-failure
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - 9999:9999
+      - 9998:9998
+    networks:
+      - demo_net
+networks:
+  demo_net:
