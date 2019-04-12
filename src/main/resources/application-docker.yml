@@ -14,3 +14,6 @@ spring:
       namespace: spring:session
 
 zk.url: 10.222.22.73:2181
+
+logging:
+  config: classpath:logback-elk.xml

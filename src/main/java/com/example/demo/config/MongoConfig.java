@@ -1,28 +1,20 @@
 package com.example.demo.config;
 
 
-import com.mongodb.MongoClient;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.mongo.MongoProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
+import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.MongoTransactionManager;
 
 @Configuration
-@EnableConfigurationProperties(MongoProperties.class)
-public class MongoConfig extends AbstractMongoConfiguration {
+public class MongoConfig {
 
-    @Autowired
-    private MongoProperties mongoProperties;
-
-    @Override
-    public MongoClient mongoClient() {
-        return new MongoClient(mongoProperties.getHost(), mongoProperties.getPort());
-    }
-
-    @Override
-    protected String getDatabaseName() {
-        return mongoProperties.getDatabase();
+    @Bean
+    @ConditionalOnProperty(name = "mongodb.transaction.enabled", havingValue = "true")
+    public MongoTransactionManager transactionManager(MongoDbFactory dbFactory) {
+        return new MongoTransactionManager(dbFactory);
     }
 }
+
 

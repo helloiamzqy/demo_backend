@@ -20,7 +20,10 @@ public class ZookeeperIndicator implements HealthIndicator {
     @Override
     public Health health() {
         if (isDown()) {
-            return Health.down().withDetail("url", zkUrl).withDetail("message", "Connection refused").build();
+            return Health.down()
+                    .withDetail("url", zkUrl)
+                    .withDetail("message", "Connection refused")
+                    .build();
         }
         return Health.up().withDetail("url", zkUrl).build();
     }
